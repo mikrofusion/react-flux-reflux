@@ -56,13 +56,15 @@ body {
     font-family: 'PT Sans', sans-serif;
     min-height: 740px;
 
-    background: rgb(215, 215, 215);
-    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));
-    background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:    -moz-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:     -ms-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:      -o-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
-    background:         radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+    color: #fff;
+    background: #111;
+    background: rgb(20, 20, 20);
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(50, 50, 50)), to(rgb(20, 20, 20)));
+    background: -webkit-radial-gradient(rgb(65, 65, 65), rgb(0, 0, 0));
+    background:    -moz-radial-gradient(rgb(65, 65, 65), rgb(0, 0, 0));
+    background:     -ms-radial-gradient(rgb(65, 65, 65), rgb(0, 0, 0));
+    background:      -o-radial-gradient(rgb(65, 65, 65), rgb(0, 0, 0));
+    background:         radial-gradient(rgb(65, 65, 65), rgb(0, 0, 0));
 }
 
 /*
@@ -722,35 +724,38 @@ h3 {
   width: 50%;
 }
 
-.slide {
-  background-color: #ccc;
-}
-
 .model {
+  color: #000;
   background-color: #aaf;
 }
 
 .view {
+  color: #000;
   background-color: #afa;
 }
 
 .controller {
+  color: #000;
   background-color: #faa;
 }
 
 .user {
+  color: #000;
   background-color: #aaa;
 }
 
 .action {
+  color: #000;
   background-color: #aaf;
 }
 
 .dispatcher {
+  color: #000;
   background-color: #aff;
 }
 
 .store {
+  color: #000;
   background-color: #faa;
 }
 
@@ -784,7 +789,7 @@ ul {
 
 li:before {
     content: "⚛ ";
-    color: #777;
+    color: #999;
 }
 
 #flux-resources-1 {
@@ -805,8 +810,8 @@ ul ul {
 }
 
 .code {
-  background: #000;
-  color: #fff;
+  background: #fff;
+  color: #000;
   padding: 50px;
   border-radius: 20px;
   font-family: monospace;
@@ -815,6 +820,10 @@ ul ul {
 
 img {
   float: right;
+}
+
+#hovercraft-help {
+  background-color: rgba(100, 100, 100, .4);
 }
 
 /* mobile */

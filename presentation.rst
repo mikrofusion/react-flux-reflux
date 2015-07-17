@@ -36,8 +36,8 @@ Overview
 
 ----
 
-:data-rotate: 90
-:data-rotate-y: 90
+:data-rotate: 100
+:data-rotate-y: 100
 
 Part I: Some Theory
 ===================
@@ -157,8 +157,8 @@ Referential transparency
 
 ----
 
-:data-rotate: 90
-:data-rotate-y: 90
+:data-rotate: 100
+:data-rotate-y: 100
 
 Part II: React
 ==============
@@ -220,8 +220,8 @@ React recommends using JSX to give the markup a familiar syntax.
 ----
 
 :data-y: r3000
-:data-rotate: 90
-:data-rotate-y: 90
+:data-rotate: 100
+:data-rotate-y: 100
 
 Part III: Flux / RefluxJS
 =========================
@@ -361,8 +361,8 @@ RefluxJS
 
 ----
 
-:data-rotate: 90
-:data-rotate-y: 90
+:data-rotate: 100
+:data-rotate-y: 100
 
 Part IV: A Bit Of Code
 ======================
@@ -441,8 +441,8 @@ Components
 
 ----
 
-:data-rotate: 90
-:data-rotate-y: 90
+:data-rotate: 100
+:data-rotate-y: 100
 
 Questions?
 ==========
