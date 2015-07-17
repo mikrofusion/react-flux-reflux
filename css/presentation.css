@@ -813,6 +813,24 @@ ul ul {
   font-size: 20px;
 }
 
+img {
+  float: right;
+}
+
+/* mobile */
+.impress-not-supported .step {
+  height: 100vh;
+  padding-top: 200px;
+  position: relative;
+  border-top: solid;
+  border-color: #999;
+}
+
+.impress-not-supported #hovercraft-help {
+  visibility: hidden;
+  display: none !important;
+}
+
 /*!
  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)

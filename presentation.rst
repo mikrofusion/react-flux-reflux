@@ -8,6 +8,11 @@
 
 ----
 
+.. image:: images/react.png
+    :height: 200px
+    :width: 200px
+    :align: right
+
 React
 =====
 
