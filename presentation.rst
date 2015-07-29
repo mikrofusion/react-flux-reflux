@@ -8,10 +8,13 @@
 
 ----
 
-.. image:: images/react.png
-    :height: 200px
-    :width: 200px
-    :align: right
+.. raw:: html
+
+  <div class="github-fork-ribbon-wrapper right">
+    <div class="github-fork-ribbon">
+      <a href="https://github.com/mikrofusion/react-flux-reflux">Fork me on GitHub</a>
+    </div>
+  </div>
 
 React
 =====
