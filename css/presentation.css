@@ -724,6 +724,23 @@ h3 {
   width: 50%;
 }
 
+.container-2-3 {
+  font-size: 30px;
+  margin: 0 0;
+  display: block;
+  text-align: center;
+  letter-spacing: -1px;
+  width: 66%;
+}
+.container-1-3 {
+  font-size: 30px;
+  margin: 0 0;
+  display: block;
+  text-align: center;
+  letter-spacing: -1px;
+  width: 33%;
+}
+
 .model {
   color: #000;
   background-color: #aaf;

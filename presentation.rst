@@ -30,6 +30,9 @@ Flux
 RefluxJS
 ========
 
+Redux
+========
+
 Mike Groseclose (@mikrofusion)
 
 ----
@@ -39,7 +42,7 @@ Overview
 
 * Part I:   Some Theory
 * Part II:  React
-* Part III: Flux / Reflux
+* Part III: Flux / Reflux / Redux
 * Part V:   A Bit Of Code
 
 ----
@@ -165,6 +168,43 @@ Referential transparency
 
 ----
 
+Event Sourcing Pattern
+======================
+
+Rather than storing the current state, store the initial state and the events that lead to the current state.
+
+----
+
+.. code:: javascript
+
+  input: 0
+
+.. raw:: html
+
+  <br>
+
+.. code:: javascript
+
+  event: +3
+
+.. raw:: html
+
+  <br>
+
+.. code:: javascript
+
+  event: -1
+
+.. raw:: html
+
+  <br>
+
+.. code:: javascript
+
+  output: 2
+
+----
+
 :data-rotate: 100
 :data-rotate-y: 100
 
@@ -231,8 +271,11 @@ React recommends using JSX to give the markup a familiar syntax.
 :data-rotate: 100
 :data-rotate-y: 100
 
-Part III: Flux / RefluxJS
-=========================
+Part III:
+=========
+
+Flux / RefluxJS / Redux
+=======================
 
 ----
 
@@ -261,12 +304,12 @@ Flux is a pattern, not a framework.
 
 ----
 
-What is RefluxJS?
+RefluxJS & Redux?
 =================
 
-  * RefluxJS is a framework implementation of the Flux architecture.
-  * RefluxJS strives to be more Functional Reactive Programming (FRP) friendly and simplify Flux.
-  * RefluxJS is my preferred Flux Library.
+  * RefluxJS and Redux are framework implementations of the Flux architecture.
+  * RefluxJS strive to be more Functional Reactive Programming (FRP) friendly and simplify Flux.
+  * Redux is completely decoupled from React and has live code editing combined with a time traveling debugger.
 
 ----
 
@@ -334,6 +377,8 @@ The dispatcher really contains no business logic and is mostly the same between 
 
 It can be argued that the dispatcher is mostly an implementation detail.
 
+----
+
 RefluxJS removes the dispatcher from the flow, by pushing its responsibility into the actions.
 
 ----
@@ -351,6 +396,65 @@ RefluxJS
   <div class='container-half'>
     <i class="fa fa-arrow-down"></i>
     <div class='store'>Store</div>
+  </div>
+
+  <div class='container'>
+    <i class="fa fa-arrow-down"></i>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <i class="fa fa-arrow-up"></i>
+    <div class='view'>View</div>
+  </div>
+
+  <div class='container'>
+    <i class="fa fa-arrow-down"></i>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <i class="fa fa-arrow-up"></i>
+    <div class='user'>User</div>
+  </div>
+
+----
+
+Redux
+=====
+
+Redux uses a single store to store the state of the application.
+
+Redux uses the Event Sourcing Pattern and adds a Reducer to mutate the store.
+
+----
+
+Redux Reducers
+==============
+Pure functions that specify how the application’s state changes in response to an action.
+
+.. code:: javascript
+
+  (previousState, action) => newState
+
+----
+
+Redux
+=====
+
+.. raw:: html
+
+  <div class='container'>
+    <br>
+    <div class='action'>Action</div>
+  </div>
+
+  <div class='container-1-3'>
+    <i class="fa fa-arrow-down"></i>
+    <div class='store'>Store</div>
+  </div>
+
+  <div class='container-2-3'>
+    <i class="fa fa-arrow-down"></i>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;
+    <i class="fa fa-arrow-down"></i>
+    <div class='store'>Reducers</div>
   </div>
 
   <div class='container'>
@@ -446,6 +550,83 @@ Components
       );
     }
   });
+
+----
+
+Todo MVC in Redux
+=================
+
+Code snippets taken from: https://github.com/rackt/redux/tree/master/examples/todomvc
+
+----
+
+Actions
+=======
+
+.. code:: javascript
+
+  export function addTodo(text) {
+    return { type: types.ADD_TODO, text };
+  }
+
+  export function deleteTodo(id) {
+    return { type: types.DELETE_TODO, id };
+  }
+
+  ...
+
+----
+
+Reducers
+========
+
+.. code:: javascript
+
+  export default function todos(state = initialState, action) {
+    switch (action.type) {
+    case ADD_TODO:
+      return [{
+        id: state.length,
+        completed: false,
+        text: action.text
+      }, ...state];
+
+    case DELETE_TODO:
+      return state.filter(todo =>
+        todo.id !== action.id
+      );
+
+    ...
+
+----
+
+Components
+==========
+
+.. code:: javascript
+
+  class TodoItem extends Component {
+    constructor(props, context) {
+      ...
+      this.state = { editing: false };
+    }
+
+    ...
+
+    render() {
+      const {todo, completeTodo, deleteTodo} = this.props;
+
+      ...
+
+      return (
+        <li className={classnames({
+          completed: todo.completed,
+          editing: this.state.editing
+        })}>
+          {element}
+        </li>
+      );
+    }
 
 ----
 
