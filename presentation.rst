@@ -419,7 +419,7 @@ Redux
 
 Redux uses a single store to store the state of the application.
 
-Redux uses the Event Sourcing Pattern and adds a Reducer to mutate the store.
+Redux uses the Event Sourcing Pattern and adds Reducers to mutate the store.
 
 ----
 
