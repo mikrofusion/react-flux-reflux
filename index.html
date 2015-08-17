@@ -1,0 +1,190 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Flux Reflux React</title><meta name="generator" content="Hovercraft! 1.0 http://regebro.github.com/hovercraft"></meta><link rel="stylesheet" href="css/hovercraft.css" media="all"></link><link rel="stylesheet" href="css/impressConsole.css" media="all"></link><link rel="stylesheet" href="css/highlight.css" media="all"></link><link rel="stylesheet" href="css/presentation.css" media="screen,projection"></link></head><body class="impress-not-supported"><div id="impress" data-transition-duration="1000"><div class="step step-level-1" step="0" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="0" data-y="0" data-z="0"><div class="github-fork-ribbon-wrapper right">
+  <div class="github-fork-ribbon">
+    <a href="https://github.com/mikrofusion/react-flux-reflux">Fork me on GitHub</a>
+  </div>
+</div><img src="images/react.png" width="200px" height="200px"></img><h1 id="react">React</h1><h1 id="flux">Flux</h1><h1 id="refluxjs">RefluxJS</h1><h1 id="redux">Redux</h1><p>Mike Groseclose (@mikrofusion)</p></div><div class="step step-level-1" step="1" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="1600" data-y="0" data-z="0"><h1 id="overview">Overview</h1><ul><li>Part I:   Some Theory</li><li>Part II:  React</li><li>Part III: Flux / Reflux / Redux</li><li>Part V:   A Bit Of Code</li></ul></div><div class="step step-level-1" step="2" data-rotate-y="100" data-rotate-x="0" data-rotate-z="100" data-scale="1" data-x="3200" data-y="0" data-z="0"><h1 id="part-i-some-theory">Part I: Some Theory</h1></div><div class="step step-level-1" step="3" data-rotate-y="0" data-rotate-x="0" data-rotate-z="0" data-scale="1" data-x="4800" data-y="0" data-z="0"><h1 id="impure-functions">Impure functions</h1><blockquote><ul><li>Don&#x2019;t always return the same result given the same input.</li><li>Can cause side effects.</li></ul></blockquote></div><div class="step step-level-1" step="4" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="6400" data-y="0" data-z="0"><pre class="highlight code javascript"><span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">increment</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="o">++</span><span class="nx">count</span><span class="p">;</span>
+<span class="p">}</span></pre></div><div class="step step-level-1" step="5" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="8000" data-y="0" data-z="0"><pre class="highlight code javascript"><span class="kd">function</span> <span class="nx">debug</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+<span class="p">}</span></pre><div class='shrink'>
+  Note: writing to disk / file is a side effect.
+</div></div><div class="step step-level-1" step="6" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="9600" data-y="0" data-z="0"><p>Expressions made from impure functions are hard to predict.</p><p>Expressions made from impure functions are hard to test.</p></div><div class="step step-level-1" step="7" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="11200" data-y="0" data-z="0"><dl><dt>Lack of testing and predictability makes applications:</dt><dd><ul><li>harder to reason about.</li><li>harder to scale.</li><li>harder to refactor with confidence.</li></ul></dd></dl></div><div class="step step-level-1" step="8" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="12800" data-y="0" data-z="0"><p>Expressions made from impure functions create fragile applications.</p></div><div class="step step-level-1" step="9" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="14400" data-y="0" data-z="0"><h1 id="pure-functions">Pure functions</h1><blockquote><ul><li>Will always evaluate to the same result given the same input.</li><li>Stateless.</li><li>No side effects.</li></ul></blockquote></div><div class="step step-level-1" step="10" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="16000" data-y="0" data-z="0"><h1 id="pure-expressions">Pure expressions</h1><blockquote><ul><li>Expressions that are constructed from pure functions.</li><li>Pure functions are referentially transparent.</li><li>An expression which is referentially transparent can be replaced with its value and have no impact on the system.</li></ul></blockquote></div><div class="step step-level-1" step="11" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="17600" data-y="0" data-z="0"><p>Referencially transparent functions are like black boxes.</p></div><div class="step step-level-1" step="12" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="19200" data-y="0" data-z="0"><h1 id="black-box-development">Black box development</h1><blockquote><ul><li>With black boxes implementation details do not matter.</li><li>When working with a black box the only concern is inputs and outputs.</li><li>One black box can be replaced with another black box as long as same data in results in same data out.</li></ul></blockquote></div><div class="step step-level-1" step="13" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="20800" data-y="0" data-z="0"><h1 id="referential-transparency">Referential transparency</h1><blockquote><ul><li>Simplifies the code making it easier to reason about.</li><li>Makes testing easier (focus on inputs and outputs)</li><li>Allows for more confident refactors.</li><li>Less fragile, more scalable code.</li></ul></blockquote></div><div class="step step-level-1" step="14" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="22400" data-y="0" data-z="0"><pre class="highlight code javascript"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">y</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">result</span> <span class="o">+=</span> <span class="nx">x</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span></pre></div><div class="step step-level-1" step="15" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="24000" data-y="0" data-z="0"><pre class="highlight code javascript"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span></pre></div><div class="step step-level-1" step="16" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="25600" data-y="0" data-z="0"><h1 id="event-sourcing-pattern">Event Sourcing Pattern</h1><p>Rather than storing the current state, store the initial state and the events that lead to the current state.</p></div><div class="step step-level-1" step="17" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="27200" data-y="0" data-z="0"><pre class="highlight code javascript"><span class="nx">input</span><span class="o">:</span> <span class="mi">0</span></pre><br><pre class="highlight code javascript"><span class="nx">event</span><span class="o">:</span> <span class="o">+</span><span class="mi">3</span></pre><br><pre class="highlight code javascript"><span class="nx">event</span><span class="o">:</span> <span class="o">-</span><span class="mi">1</span></pre><br><pre class="highlight code javascript"><span class="nx">output</span><span class="o">:</span> <span class="mi">2</span></pre></div><div class="step step-level-1" step="18" data-rotate-y="100" data-rotate-x="0" data-rotate-z="100" data-scale="1" data-x="28800" data-y="0" data-z="0"><h1 id="part-ii-react">Part II: React</h1></div><div class="step step-level-1" step="19" data-rotate-x="0" data-rotate-y="100" data-rotate-z="100" data-scale="1" data-x="30400" data-y="0" data-z="0"><p>A JavaScript library for building user interfaces.</p></div><div class="step step-level-1" step="20" data-rotate-y="0" data-rotate-x="0" data-rotate-z="0" data-scale="1" data-x="32000" data-y="0" data-z="0"><p>React is only a view component.</p><p>React is technology stack agnostic.</p></div><div class="step step-level-1" step="21" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="33600" data-y="0" data-z="0"><h1 id="why-react">Why React?</h1><blockquote><ul><li>React focuses on being simple and declarative</li><li>React is about building reusable components.</li><li>Similar to black boxes, React components are extremely encapsulated making code reuse, testing, and separation of concerns easy.</li></ul></blockquote></div><div class="step step-level-1" step="22" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="35200" data-y="0" data-z="0"><p>In order to be stay encapsulated React uses some unfamiliar conventions.</p></div><div class="step step-level-1" step="23" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="36800" data-y="0" data-z="0"><h1 id="react-doesn-t-use-templates">React doesn't use templates</h1><p>React combines markup and view logic into a single component.</p><p>This creates components which are easier to extend and maintain.</p><p>React recommends using JSX to give the markup a familiar syntax.</p></div><div class="step step-level-1" step="24" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="38400" data-y="0" data-z="0"><pre class="highlight code javascript"><span class="kd">var</span> <span class="nx">Bar</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'./foo'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">Foo</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+  <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">Bar</span> <span class="nx">name</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></pre></div><div class="step step-level-1" step="25" data-y="3000" data-rotate-y="100" data-rotate-x="0" data-rotate-z="100" data-scale="1" data-x="40000" data-z="0"><h1 id="part-iii">Part III:</h1><h1 id="flux-refluxjs-redux">Flux / RefluxJS / Redux</h1></div><div class="step step-level-1" step="26" data-y="3000" data-rotate-y="0" data-rotate-x="0" data-rotate-z="0" data-scale="1" data-x="41600" data-z="0"><h1 id="what-is-flux">What is Flux?</h1><p>Flux is the application architecture that Facebook uses to build client-side web apps.</p></div><div class="step step-level-1" step="27" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="43200" data-y="3000" data-z="0"><p>Flux complements React's composable view components by utilizing a unidirectional data flow.</p><p>Flux takes a more functional approach to how data is handled in a web application.</p><p>Flux is a pattern, not a framework.</p><div class='shrink'>
+  * There is no requirement to use a Flux architecture when using React.
+</div></div><div class="step step-level-1" step="28" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="44800" data-y="3000" data-z="0"><h1 id="refluxjs-redux">RefluxJS &amp; Redux?</h1><blockquote><ul><li>RefluxJS and Redux are framework implementations of the Flux architecture.</li><li>RefluxJS strive to be more Functional Reactive Programming (FRP) friendly and simplify Flux.</li><li>Redux is completely decoupled from React and has live code editing combined with a time traveling debugger.</li></ul></blockquote></div><div class="step step-level-1" step="29" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="46400" data-y="3000" data-z="0"><h1 id="id1">Flux</h1><div class='container'>
+  <br>
+  <div class='action'>Action</div>
+</div>
+
+<div class='container-half'>
+  <i class="fa fa-arrow-down"></i>
+  <div class='dispatcher'>Dispatcher</div>
+</div>
+
+<div class='container-half'>
+  <i class="fa fa-arrow-down"></i>
+  <div class='store'>Store</div>
+</div>
+
+<div class='container'>
+  <i class="fa fa-arrow-down"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa fa-arrow-up"></i>
+  <div class='view'>View</div>
+</div>
+
+<div class='container'>
+  <i class="fa fa-arrow-down"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa fa-arrow-up"></i>
+  <div class='user'>User</div>
+</div>
+<span class="footnote"><sup>*</sup> note the unidirectional flow of data</span></div><div class="step step-level-1" step="30" data-z="1500" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="48000" data-y="3000"><ul><li>Actions<ul><li>An object literal containing data and a type property.</li></ul></li><li>Dispatcher<ul><li>The dispatcher manages all data flow in Flux (via a registry of callbacks)</li></ul></li><li>Stores<ul><li>Stores contain the application state and logic for a particular domain within the application.</li></ul></li><li>Views<ul><li>Views listen for changes from the stores and re-render themselves as needed.</li><li>When using React this is your React component.</li></ul></li></ul></div><div class="step step-level-1" step="31" data-z="1500" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="49600" data-y="3000"><p>The dispatcher really contains no business logic and is mostly the same between applications using Flux.</p><p>It can be argued that the dispatcher is mostly an implementation detail.</p></div><div class="step step-level-1" step="32" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="51200" data-y="3000" data-z="1500"><p>RefluxJS removes the dispatcher from the flow, by pushing its responsibility into the actions.</p></div><div class="step step-level-1" step="33" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="52800" data-y="3000" data-z="1500"><h1 id="id2">RefluxJS</h1><div class='container'>
+  <br>
+  <div class='action'>Action</div>
+</div>
+
+<div class='container-half'>
+  <i class="fa fa-arrow-down"></i>
+  <div class='store'>Store</div>
+</div>
+
+<div class='container'>
+  <i class="fa fa-arrow-down"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa fa-arrow-up"></i>
+  <div class='view'>View</div>
+</div>
+
+<div class='container'>
+  <i class="fa fa-arrow-down"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa fa-arrow-up"></i>
+  <div class='user'>User</div>
+</div></div><div class="step step-level-1" step="34" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="54400" data-y="3000" data-z="1500"><h1 id="id3">Redux</h1><p>Redux uses a single store to store the state of the application.</p><p>Redux uses the Event Sourcing Pattern and adds Reducers to mutate the store.</p></div><div class="step step-level-1" step="35" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="56000" data-y="3000" data-z="1500"><h1 id="redux-reducers">Redux Reducers</h1><p>Pure functions that specify how the application&#x2019;s state changes in response to an action.</p><pre class="highlight code javascript"><span class="p">(</span><span class="nx">previousState</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">newState</span></pre></div><div class="step step-level-1" step="36" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="57600" data-y="3000" data-z="1500"><h1 id="id4">Redux</h1><div class='container'>
+  <br>
+  <div class='action'>Action</div>
+</div>
+
+<div class='container-1-3'>
+  <i class="fa fa-arrow-down"></i>
+  <div class='store'>Store</div>
+</div>
+
+<div class='container-2-3'>
+  <i class="fa fa-arrow-down"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+  <i class="fa fa-arrow-down"></i>
+  <div class='store'>Reducers</div>
+</div>
+
+<div class='container'>
+  <i class="fa fa-arrow-down"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa fa-arrow-up"></i>
+  <div class='view'>View</div>
+</div>
+
+<div class='container'>
+  <i class="fa fa-arrow-down"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <i class="fa fa-arrow-up"></i>
+  <div class='user'>User</div>
+</div></div><div class="step step-level-1" step="37" data-rotate-y="100" data-rotate-x="0" data-rotate-z="100" data-scale="1" data-x="59200" data-y="3000" data-z="1500"><h1 id="part-iv-a-bit-of-code">Part IV: A Bit Of Code</h1></div><div class="step step-level-1" step="38" data-rotate-y="0" data-rotate-x="0" data-rotate-z="0" data-scale="1" data-x="60800" data-y="3000" data-z="1500"><h1 id="todo-mvc-in-refluxjs">Todo MVC in RefluxJS</h1><p>Code snippets taken from: <a href="https://github.com/spoike/refluxjs-todo">https://github.com/spoike/refluxjs-todo</a></p></div><div class="step step-level-1" step="39" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="62400" data-y="3000" data-z="1500"><h1 id="actions">Actions</h1><pre class="highlight code javascript"><span class="nx">TodoActions</span> <span class="o">=</span> <span class="nx">Reflux</span><span class="p">.</span><span class="nx">createActions</span><span class="p">([</span>
+      <span class="s2">"toggleItem"</span><span class="p">,</span>
+      <span class="s2">"toggleAllItems"</span><span class="p">,</span>
+      <span class="s2">"addItem"</span><span class="p">,</span>
+      <span class="s2">"removeItem"</span><span class="p">,</span>
+      <span class="s2">"clearCompleted"</span><span class="p">,</span>
+      <span class="s2">"editItem"</span>
+  <span class="p">]);</span></pre></div><div class="step step-level-1" step="40" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="64000" data-y="3000" data-z="1500"><h1 id="stores">Stores</h1><pre class="highlight code javascript"><span class="nx">Reflux</span><span class="p">.</span><span class="nx">createStore</span><span class="p">({</span>
+  <span class="nx">listenables</span><span class="o">:</span> <span class="p">[</span><span class="nx">TodoActions</span><span class="p">],</span> <span class="c1">// set up listeners
+</span>  <span class="nx">onEditItem</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">itemKey</span><span class="p">,</span> <span class="nx">newLabel</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+  <span class="p">},</span>
+
+  <span class="p">...</span>
+
+  <span class="nx">updateList</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">list</span><span class="p">){</span>
+    <span class="c1">// sends the updated list to all listening components
+</span>    <span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="nx">list</span><span class="p">);</span>
+  <span class="p">},</span>
+
+  <span class="p">...</span>
+
+<span class="p">});</span></pre></div><div class="step step-level-1" step="41" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="65600" data-y="3000" data-z="1500"><h1 id="components">Components</h1><pre class="highlight code javascript"><span class="kd">var</span> <span class="nx">TodoApp</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+  <span class="c1">// sets state.list when store does trigger(updatedlist)
+</span>  <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">Reflux</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">todoListStore</span><span class="p">,</span><span class="s2">"list"</span><span class="p">)],</span>
+
+  <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TodoHeader</span> <span class="o">/&gt;</span>
+          <span class="o">&lt;</span><span class="nx">ReactRouter</span><span class="p">.</span><span class="nx">RouteHandler</span> <span class="nx">list</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">list</span><span class="p">}</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TodoFooter</span> <span class="nx">list</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">list</span><span class="p">}</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></pre></div><div class="step step-level-1" step="42" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="67200" data-y="3000" data-z="1500"><h1 id="todo-mvc-in-redux">Todo MVC in Redux</h1><p>Code snippets taken from: <a href="https://github.com/rackt/redux/tree/master/examples/todomvc">https://github.com/rackt/redux/tree/master/examples/todomvc</a></p></div><div class="step step-level-1" step="43" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="68800" data-y="3000" data-z="1500"><h1 id="id5">Actions</h1><pre class="highlight code javascript"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">addTodo</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nx">types</span><span class="p">.</span><span class="nx">ADD_TODO</span><span class="p">,</span> <span class="nx">text</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="kd">function</span> <span class="nx">deleteTodo</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nx">types</span><span class="p">.</span><span class="nx">DELETE_TODO</span><span class="p">,</span> <span class="nx">id</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="p">...</span></pre></div><div class="step step-level-1" step="44" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="70400" data-y="3000" data-z="1500"><h1 id="reducers">Reducers</h1><pre class="highlight code javascript"><span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">todos</span><span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="nx">ADD_TODO</span><span class="o">:</span>
+    <span class="k">return</span> <span class="p">[{</span>
+      <span class="nx">id</span><span class="o">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+      <span class="nx">completed</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nx">text</span><span class="o">:</span> <span class="nx">action</span><span class="p">.</span><span class="nx">text</span>
+    <span class="p">},</span> <span class="p">...</span><span class="nx">state</span><span class="p">];</span>
+
+  <span class="k">case</span> <span class="nx">DELETE_TODO</span><span class="o">:</span>
+    <span class="k">return</span> <span class="nx">state</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">todo</span> <span class="o">=&gt;</span>
+      <span class="nx">todo</span><span class="p">.</span><span class="nx">id</span> <span class="o">!==</span> <span class="nx">action</span><span class="p">.</span><span class="nx">id</span>
+    <span class="p">);</span>
+
+  <span class="p">...</span></pre></div><div class="step step-level-1" step="45" data-rotate-x="0" data-rotate-y="0" data-rotate-z="0" data-scale="1" data-x="72000" data-y="3000" data-z="1500"><h1 id="id6">Components</h1><pre class="highlight code javascript"><span class="kr">class</span> <span class="nx">TodoItem</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">editing</span><span class="o">:</span> <span class="kc">false</span> <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="p">...</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="p">{</span><span class="nx">todo</span><span class="p">,</span> <span class="nx">completeTodo</span><span class="p">,</span> <span class="nx">deleteTodo</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">;</span>
+
+    <span class="p">...</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">className</span><span class="o">=</span><span class="p">{</span><span class="nx">classnames</span><span class="p">({</span>
+        <span class="nx">completed</span><span class="o">:</span> <span class="nx">todo</span><span class="p">.</span><span class="nx">completed</span><span class="p">,</span>
+        <span class="nx">editing</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">editing</span>
+      <span class="p">})}</span><span class="o">&gt;</span>
+        <span class="p">{</span><span class="nx">element</span><span class="p">}</span>
+      <span class="o">&lt;</span><span class="err">/li&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span></pre></div><div class="step step-level-1" step="46" data-rotate-y="100" data-rotate-x="0" data-rotate-z="100" data-scale="1" data-x="73600" data-y="3000" data-z="1500"><h1 id="questions">Questions?</h1></div></div><div id="hovercraft-help"><table><tr><th>Space</th><td>Forward</td></tr><tr><th>Right, Down, Page Down</th><td>Next slide</td></tr><tr><th>Left, Up, Page Up</th><td>Previous slide</td></tr><tr><th>P</th><td>Open presenter console</td></tr><tr><th>H</th><td>Toggle this help</td></tr></table></div><script type="text/javascript" src="js/impress.js"></script><script type="text/javascript" src="js/impressConsole.js"></script><script type="text/javascript" src="js/hovercraft.js"></script></body></html>
